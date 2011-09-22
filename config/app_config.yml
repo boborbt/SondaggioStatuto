@@ -1,5 +1,6 @@
 production:
   app_state: closed
+  secret: put_here_your_secret_string
 
 test:
   app_state: open

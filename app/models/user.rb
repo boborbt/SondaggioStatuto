@@ -19,6 +19,7 @@ class User < ActiveRecord::Base
   has_many :answers, :dependent => :destroy
   has_one :activation_code
   
+  # FIXME: Move the mail pattern into the configuration
   validates_format_of :email, :with => /[.@]unito\.it$/, :message => "must be a valid UNITO email address"
   validates_uniqueness_of :email
   
