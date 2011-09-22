@@ -1,0 +1,12 @@
+production:
+  app_state: closed
+
+test:
+  app_state: open
+  no_mail_sending: true
+  secret: secret_string
+
+development:
+  app_state: open
+  no_mail_sending: true
+  secret: secret_string

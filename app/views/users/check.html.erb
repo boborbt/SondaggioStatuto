@@ -1,0 +1,9 @@
+<h1>Controllo validità codice utente</h1>
+
+<%= render :partial => 'application/instructions', :locals => { :active_point => 2} %>
+
+<% form_tag({:controller => 'answers', :action => "new"}, {:method => :get}) do %>
+	<%= label :activation_code, :code, 'codice utente'  %>:<%= text_field :activation_code, :code %>
+	<br/>
+	<%= submit_tag "Continua" %>
+<% end -%>

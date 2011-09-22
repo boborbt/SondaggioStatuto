@@ -1,0 +1,21 @@
+<h1>Sondaggio sullo Statuto di Ateneo</h1>
+
+<%= render :partial => 'application/instructions', :locals => { :active_point => 3} %>
+
+<div class="question_text">
+	<%= @question.text %>
+</div>
+
+<%  @question.alternatives.each_with_index do |alternative, index| 
+	@alternative = alternative
+	%>
+<div class="alternative">
+	<% form_tag({:controller => 'answers', :action => "create"}) do %>
+		<%= hidden_field :answer, :id %>
+		<%= hidden_field :alternative, :id %>
+		<%= hidden_field :activation_code, :code %>
+		<%= @alternative.text %>
+		<%= submit_tag 'Scelgo questa versione', :id => "alternative_#{index}" %>
+	<% end %>
+</div>
+<% end %>
