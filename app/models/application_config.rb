@@ -29,7 +29,7 @@ class ApplicationConfig
   def ApplicationConfig.valid_email?(email)
     validation = APP_CONFIG['email_validation']
     return validation.match(email) if validation.class == Regexp
-    return EmailWhiteList.find_by_email(email) if validation == 'white_list'
+    return AllowedEmail.find_by_email(email) if validation == 'white_list'
     
     raise "Unknown email validation method"
   end

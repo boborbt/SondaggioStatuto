@@ -16,11 +16,31 @@
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
-  test "User acceptance depends on ApplicationConfig settings" do
+  test "User acceptance depends on ApplicationConfig settings - regexp pattern case" do
+    old_setting = APP_CONFIG['email_validation']
+    APP_CONFIG['email_validation'] = /[@.]unito.it/
+    
     u = User.new(:email => 'esposito@di.unito.it')
     assert u.valid?
     
     u2 = User.new(:email => 'boborbt@gmail.com')
     assert !u2.valid?
+    
+    APP_CONFIG['email_validation'] = old_setting
   end
+  
+  test "User acceptance depends on ApplicationConfig settings - white listed email case" do
+    old_setting = APP_CONFIG['email_validation']
+    APP_CONFIG['email_validation'] = 'white_list'
+    AllowedEmail.create(:email => 'bobo@bobo.com')
+    
+    u = User.new(:email => 'bobo@bobo.com')
+    assert u.valid?
+    
+    u2 = User.new(:email => 'not-allowed@di.unito.it')
+    assert !u2.valid?
+
+    APP_CONFIG['email_validation'] = old_setting
+  end
+  
 end

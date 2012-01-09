@@ -38,16 +38,44 @@ class PollUsageTest < ActionController::IntegrationTest
     end
   end
   
-  # Replace this with your real tests.
+  test "Regexp based email checking" do
+    old_config = APP_CONFIG['email_validation']
+    APP_CONFIG['email_validation'] = /@di.unito.it$/
+    
+    visit( root_path )
+    click_on('Partecipa')
+    fill_in('Email', :with => 'esposito@di.unito.it')
+    click_on('Continua')    
+    
+    assert page.has_content?('codice utente')
+    
+    APP_CONFIG['email_validation'] = old_config
+  end
+  
+  test "WhiteList based email checking" do
+    old_config = APP_CONFIG['email_validation']
+    APP_CONFIG['email_validation'] = 'white_list'
+    
+    AllowedEmail.create(:email => 'bobo@bobo.com')
+    
+    visit( root_path )
+    click_on('Partecipa')
+    fill_in('Email', :with => 'bobo@bobo.com')
+    click_on('Continua')    
+    
+    assert page.has_content?('codice utente')
+    
+    APP_CONFIG['email_validation'] = old_config
+  end
+  
+  
   test "Complete user flow from email giving to completing the poll" do    
     visit( root_path )
     click_on('Partecipa')
     fill_in('Email', :with => 'esposito@di.unito.it')
     click_on('Continua')    
 
-    # save_and_open_page
     assert page.has_content?('codice utente')
-
     
     u = User.all
     assert_equal 1, u.size
@@ -103,7 +131,7 @@ class PollUsageTest < ActionController::IntegrationTest
   test "check page refuses unknown codes" do
     visit( root_path )
     click_on('Partecipa')
-    fill_in('Email', :with => 'esposito@unito.it')    
+    fill_in('Email', :with => 'esposito@di.unito.it')    
     click_on('Continua')
 
     fill_in('codice utente', :with => '----------invalid-sha1------------------')
@@ -173,9 +201,8 @@ class PollUsageTest < ActionController::IntegrationTest
     user = rand(100).to_s
     email = "#{user}@di.unito.it"
     fill_in('Email', :with => email)
-    click_on('Continua')    
-
-    
+    click_on('Continua')
+        
     u = User.find_by_email(email)
     fill_in('codice utente', :with => u.activation_code.code)
     click_on('Continua')

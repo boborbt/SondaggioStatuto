@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
   
   def validate
     unless ApplicationConfig.valid_email?(self.email)    
-      errors.add_to_base("L'email address specificato non è ritenuto valido per questo sondaggio")
+      errors.add_to_base("L'email address #{self.email} non è ritenuto valido per questo sondaggio")
     end
   end
   
