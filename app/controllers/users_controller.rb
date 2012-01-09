@@ -11,7 +11,7 @@
 # GNU General Public License for more details.
 # 
 # You should have received a copy of the GNU General Public License
-# along with CFactorGraphs.  If not, see <http://www.gnu.org/licenses/>.
+# along with SondaggioStatuto.  If not, see <http://www.gnu.org/licenses/>.
 
 
 class UsersController < ApplicationController
@@ -41,6 +41,4 @@ class UsersController < ApplicationController
   def check_if_closed
     redirect_to closed_votes_path if ApplicationConfig.state == :closed
   end
-  
-  
 end

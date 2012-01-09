@@ -11,7 +11,7 @@
 # GNU General Public License for more details.
 # 
 # You should have received a copy of the GNU General Public License
-# along with CFactorGraphs.  If not, see <http://www.gnu.org/licenses/>.
+# along with SondaggioStatuto.  If not, see <http://www.gnu.org/licenses/>.
 
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
