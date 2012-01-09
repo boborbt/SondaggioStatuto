@@ -18,10 +18,14 @@ require 'sha1'
 class User < ActiveRecord::Base
   has_many :answers, :dependent => :destroy
   has_one :activation_code
+    
+  validates_uniqueness_of :email  
   
-  # FIXME: Move the mail pattern into the configuration
-  validates_format_of :email, :with => /[.@]unito\.it$/, :message => "must be a valid UNITO email address"
-  validates_uniqueness_of :email
+  def validate
+    unless ApplicationConfig.valid_email?(self.email)    
+      errors.add_to_base("L'email address specificato non è ritenuto valido per questo sondaggio")
+    end
+  end
   
   def assign_activation_code!
     self.activation_code = ActivationCode.consume_one!

@@ -16,6 +16,11 @@
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
-
-
+  test "User acceptance depends on ApplicationConfig settings" do
+    u = User.new(:email => 'esposito@di.unito.it')
+    assert u.valid?
+    
+    u2 = User.new(:email => 'boborbt@gmail.com')
+    assert !u2.valid?
+  end
 end
