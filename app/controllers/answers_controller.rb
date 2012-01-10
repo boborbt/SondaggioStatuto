@@ -16,23 +16,23 @@
 class AnswersController < ApplicationController
   def new
     @activation_code = ActivationCode.find_by_code(params['activation_code']['code'])
-    redirect_to( bad_user_path ) && return        if @activation_code.nil?
-    redirect_to( completed_poll_path ) && return  if @activation_code.poll_completed?
+    redirect_to( bad_user_path )        && return if @activation_code.nil?
+    redirect_to( completed_poll_path )  && return if @activation_code.poll_completed?
 
     @answer = @activation_code.next_answer
     @question = @answer.question
   end
 
   def create
-    # check that User.find(params[:user][:sha]) == Answer.find(params[:id]).user
     @activation_code  = ActivationCode.find_by_code( params[:activation_code][:code] )
     @answer = Answer.find( params[:answer][:id] )
     raise "Trying to use an unassigned code" if !@activation_code.consumed
     
     redirect_to( bad_user_path ) && return if @activation_code.nil?
     redirect_to( bad_answer_path ) && return if @answer.activation_code.nil? || @activation_code != @answer.activation_code
+
     
-    @answer.assign_alternative!(params[:alternative][:id])
+    @answer.assign_alternatives!(params[:selected_alternatives].keys)
     
 
     redirect_to :action => :new, :activation_code => { :code => @activation_code.code }

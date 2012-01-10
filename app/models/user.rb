@@ -16,7 +16,6 @@
 require 'sha1'
 
 class User < ActiveRecord::Base
-  has_many :answers, :dependent => :destroy
   has_one :activation_code
     
   validates_uniqueness_of :email  

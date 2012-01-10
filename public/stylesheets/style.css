@@ -55,9 +55,6 @@ input[type="submit"] {
 	margin-left:auto;
 }
 
-.alternative {
-	padding: 20px;
-}
 
 .warning {
 	border: 1px solid #999;
@@ -75,11 +72,6 @@ input[type="submit"] {
 */
 .emph {
 	font: italic normal normal 1em Arial, sans-serif;
-}
-
-.alternativa {
-	background-color: #DDDBD1;
-	padding: 10px 10px;
 }
 
 div.fieldWithErrors {

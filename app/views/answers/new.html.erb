@@ -6,16 +6,15 @@
 	<%= @question.text %>
 </div>
 
-<%  @question.alternatives.each_with_index do |alternative, index| 
-	@alternative = alternative
-	%>
-<div class="alternative">
-	<% form_tag({:controller => 'answers', :action => "create"}) do %>
-		<%= hidden_field :answer, :id %>
-		<%= hidden_field :alternative, :id %>
-		<%= hidden_field :activation_code, :code %>
-		<%= @alternative.text %>
-		<%= submit_tag 'Scelgo questa versione', :id => "alternative_#{index}" %>
+<% form_tag({:controller => 'answers', :action => "create"}) do %>
+	<%= hidden_field :answer, :id %>
+	<%= hidden_field :activation_code, :code %>
+	
+	<%  @question.alternatives.each_with_index do |alternative, index| 
+		@alternative = alternative %>
+		
+	<%= check_box_tag("selected_alternatives[#{@alternative.id}]") %> <%=  @alternative.text %><br/>
 	<% end %>
-</div>
+	
+	<%= submit_tag 'Confermo' %>
 <% end %>

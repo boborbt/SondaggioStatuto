@@ -20,31 +20,12 @@ q1text = %q{
   </div> 
 }
 
-q1alt1 = %q{
-  <div class="alternativa">
-  <p>A)  &ndash; Bobo</p>
-  </div>
-}
+q1alt1 = %q{Bobo}
+q1alt2 = %q{Dani}
+q1alt3 = %q{Leo}
+q1alt4 = %q{Gigi}
 
-q1alt2 = %q{
-  <div class="alternativa">
-  <p>B)  &ndash; Bobo</p>
-  </div>  
-}
-
-q1alt3 = %q{
-  <div class="alternativa">
-  <p>C)  &ndash; Leo</p>
-  </div>
-}
-
-q1alt4 = %q{
-  <div class="alternativa">
-  <p>D)  &ndash; Gigi</p>
-  </div>  
-}
-
-q1 = Question.create!( :text => q1text, :sort_id => 1 )
+q1 = Question.create!( :text => q1text, :sort_id => 1, :kind => 'multichoice' )
 q1.alternatives << Alternative.create!( :text => q1alt1 )
 q1.alternatives << Alternative.create!( :text => q1alt2 )
 q1.alternatives << Alternative.create!( :text => q1alt3 )

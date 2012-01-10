@@ -21,7 +21,11 @@ class Answer < ActiveRecord::Base
   named_scope :filled_answers, :conditions => 'alternative_id is not NULL'
   named_scope :assignable_answers, :conditions => 'activation_code_id is NULL AND alternative_id is NULL'
   
-  def assign_alternative!(alternative_id)
+  def assign_alternatives!(alternative_ids)
+    # FIXME: Support more than one alternative!
+    puts "Warn! Look at the FIXME"
+    alternative_id = alternative_ids[0]
+    
     Answer.transaction do
       self.activation_code = nil
       self.alternative_id = alternative_id

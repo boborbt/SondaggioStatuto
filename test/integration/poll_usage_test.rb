@@ -22,11 +22,11 @@ class PollUsageTest < ActionController::IntegrationTest
   def setup
     ApplicationConfig.state = :open
 
-    @q1 = Question.create( :text => 'q1', :sort_id => 1)
+    @q1 = Question.create( :text => 'q1', :sort_id => 1, :kind => 'singlechoice')
     @q1.alternatives << Alternative.new( :text => 'q1 a1' )
     @q1.alternatives << Alternative.new( :text => 'q1 a2' )
     
-    @q2 = Question.create( :text => 'q2', :sort_id => 2)
+    @q2 = Question.create( :text => 'q2', :sort_id => 2, :kind => 'singlechoice')
     @q2.alternatives << Alternative.new( :text => 'q2 a1' )
     @q2.alternatives << Alternative.new( :text => 'q2 a2' )        
 
@@ -85,13 +85,16 @@ class PollUsageTest < ActionController::IntegrationTest
     assert page.has_content?('q1 a1')
     assert page.has_content?('q1 a2')
     assert !page.has_content?('q2')
-    click_on('alternative_0')
+    check('selected_alternatives[1]')
+    click_on('Confermo')
     
     assert page.has_content?('q2')
     assert page.has_content?('q2 a1')
     assert page.has_content?('q2 a2')
-    assert !page.has_content?('q1')
-    click_on('alternative_1')
+    assert !page.has_content?('q1')  
+    Capybara.save_and_open_page
+    check('selected_alternatives[4]')
+    click_on('Confermo')
     
     assert @q1.filled_answers[0].alternative == Alternative.find_by_text('q1 a1')
     assert @q2.filled_answers[0].alternative == Alternative.find_by_text('q2 a2')
@@ -193,7 +196,7 @@ class PollUsageTest < ActionController::IntegrationTest
   
   
   private
-  def select_alternatives(alternatives)
+  def select_alternatives(choices)
     visit( root_path )
     click_on('Partecipa')
     
@@ -206,8 +209,11 @@ class PollUsageTest < ActionController::IntegrationTest
     fill_in('codice utente', :with => u.activation_code.code)
     click_on('Continua')
     
-    click_on("alternative_#{alternatives[0]}")    
-    click_on("alternative_#{alternatives[1]}")
+    check("selected_alternatives[#{@q1.alternatives[choices[0]].id}]")
+    click_on('Confermo')
+    
+    check("selected_alternatives[#{@q2.alternatives[choices[1]].id}]")
+    click_on('Confermo')
   end
 
   def check_if_down path, method=:get
