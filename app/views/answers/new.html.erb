@@ -3,7 +3,10 @@
 <%= render :partial => 'application/instructions', :locals => { :active_point => 3} %>
 
 <div class="question_text">
-	<%= @question.text %>
+    <div class="tit_quesito">	
+		<%= @question.text %>
+	</div>
+	(massimo <%= @question.num_choices %> preferenze)
 </div>
 
 <% form_tag({:controller => 'answers', :action => "create"}) do %>
@@ -11,11 +14,12 @@
 	<%= hidden_field :answer, :id %>
 	<%= hidden_field :activation_code, :code %>
 	
-	<%  @question.alternatives.each_with_index do |alternative, index| 
-		@alternative = alternative %>
-		
-	<%= check_box_tag("selected_alternatives[#{@alternative.id}]") %> 
-	<%= label_tag("selected_alternatives[#{@alternative.id}]", @alternative.text) %><br/>
+	<%  @question.alternatives.each_with_index do |alternative, index| %>
+		<% @alternative = alternative %>		
+		<div class="alternative">
+			<%= check_box_tag("selected_alternatives[#{@alternative.id}]") %> 
+			<%= label_tag("selected_alternatives[#{@alternative.id}]", @alternative.text) %>
+		</div>
 	<% end %>
 	
 	<%= submit_tag 'Confermo' %>

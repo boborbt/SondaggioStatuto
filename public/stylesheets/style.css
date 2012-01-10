@@ -55,6 +55,9 @@ input[type="submit"] {
 	margin-left:auto;
 }
 
+div.alternative {
+	margin: 10px;
+}
 
 .warning {
 	border: 1px solid #999;

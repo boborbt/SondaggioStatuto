@@ -14,11 +14,7 @@
 # along with SondaggioStatuto.  If not, see <http://www.gnu.org/licenses/>.
 
 
-q1text = %q{
-  <div class="tit_quesito">
-  Selezionare il candidato prescelto:
-  </div> 
-}
+q1text = %q{Selezionare il candidato prescelto:}
 
 q1alt1 = %q{Bobo}
 q1alt2 = %q{Dani}
