@@ -18,8 +18,8 @@ require 'test_helper'
 class ActivationCodeTest < ActiveSupport::TestCase
   # Replace this with your real tests.
   test "#generate_answers should generate one answer for each question and they are in the correct order" do
-    Question.create( :text => 'q1', :sort_id => 1, :kind => 'singlechoice')
-    Question.create( :text => 'q2', :sort_id => 2, :kind => 'singlechoice')
+    Question.create( :text => 'q1', :sort_id => 1, :num_choices => 1)
+    Question.create( :text => 'q2', :sort_id => 2, :num_choices => 1)
     
     ac = ActivationCode.new
     assert_equal 0, ac.answers.size
@@ -34,8 +34,8 @@ class ActivationCodeTest < ActiveSupport::TestCase
   end
   
   test '#completed_questionary? should return false if any of the answers is blank' do
-    Question.create( :text => 'q1', :sort_id => 1, :kind => 'singlechoice')
-    Question.create( :text => 'q2', :sort_id => 2, :kind => 'singlechoice')
+    Question.create( :text => 'q1', :sort_id => 1, :num_choices => 1)
+    Question.create( :text => 'q2', :sort_id => 2, :num_choices => 1)
 
     ac = ActivationCode.new
     ac.generate_sha!
@@ -46,23 +46,23 @@ class ActivationCodeTest < ActiveSupport::TestCase
   end
 
   test '#completed_questionary? should return true if all of answers are non-blank' do
-    Question.create( :text => 'q1', :sort_id => 1, :kind => 'singlechoice')
-    Question.create( :text => 'q2', :sort_id => 2, :kind => 'singlechoice')
+    Question.create( :text => 'q1', :sort_id => 1, :num_choices => 1)
+    Question.create( :text => 'q2', :sort_id => 2, :num_choices => 1)
 
     ac = ActivationCode.new
     ac.generate_answers!
     ac.generate_sha!
     ac.associate_answers!
     
-    ac.answers[0].alternative_id = 0
-    ac.answers[1].alternative_id = 0
+    ac.answers[0].choices = [0]
+    ac.answers[1].choices = [0]
     
     assert ac.poll_completed?    
   end
 
   test 'ApplicationConfig#next_answer should return the first non-blank answer in question.sort_id order' do
-    Question.create( :text => 'q1', :sort_id => 2, :kind => 'singlechoice')
-    Question.create( :text => 'q2', :sort_id => 1, :kind => 'singlechoice')
+    Question.create( :text => 'q1', :sort_id => 2, :num_choices => 1)
+    Question.create( :text => 'q2', :sort_id => 1, :num_choices => 1)
 
     ac = ActivationCode.new
     ac.generate_sha!
@@ -77,7 +77,7 @@ class ActivationCodeTest < ActiveSupport::TestCase
     next_answer = ac.next_answer
     assert_equal 1, next_answer.question.sort_id # should still the number 1, since we did not completed it yet
 
-    next_answer.assign_alternatives!([2])
+    next_answer.assign_choices([2])
     next_answer.save!
     
     ac.reload
@@ -115,8 +115,8 @@ class ActivationCodeTest < ActiveSupport::TestCase
   end
   
   test "associate_answers! should associate one answer for each question and make them unavailable to others" do
-    Question.create( :text => 'q1', :sort_id => 2, :kind => 'singlechoice')
-    Question.create( :text => 'q2', :sort_id => 1, :kind => 'singlechoice')
+    Question.create( :text => 'q1', :sort_id => 2, :num_choices => 1)
+    Question.create( :text => 'q2', :sort_id => 1, :num_choices => 1)
     ac = ActivationCode.new( :consumed => false )
         
     ac.generate_answers!

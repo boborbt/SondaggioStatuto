@@ -7,13 +7,15 @@
 </div>
 
 <% form_tag({:controller => 'answers', :action => "create"}) do %>
+	<%= error_messages_for 'answer' %>
 	<%= hidden_field :answer, :id %>
 	<%= hidden_field :activation_code, :code %>
 	
 	<%  @question.alternatives.each_with_index do |alternative, index| 
 		@alternative = alternative %>
 		
-	<%= check_box_tag("selected_alternatives[#{@alternative.id}]") %> <%=  @alternative.text %><br/>
+	<%= check_box_tag("selected_alternatives[#{@alternative.id}]") %> 
+	<%= label_tag("selected_alternatives[#{@alternative.id}]", @alternative.text) %><br/>
 	<% end %>
 	
 	<%= submit_tag 'Confermo' %>

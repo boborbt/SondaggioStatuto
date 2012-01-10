@@ -16,8 +16,29 @@
 require 'test_helper'
 
 class AnswerTest < ActiveSupport::TestCase
-  # Replace this with your real tests.
-  test "the truth" do
-    assert true
+  def setup
+    @alt1 =  Alternative.create
+    @alt2 =  Alternative.create
+    @alt3 =  Alternative.create
+    @alt4 =  Alternative.create
+
+    @q = Question.create!( :sort_id => 1, :num_choices => 2 )
+    @a = Answer.create!(:question => @q)
+  end
+  
+  test "assign choices should store the given vector of alternative ids" do
+    @a.choices = [@alt1.id, @alt3.id]
+    @a.save!    
+    
+    assert_equal @a.choices, [@alt1.id, @alt3.id]    
+  end
+  
+  test "assign choices should support abstined votes" do
+    assert @a.choices.nil?
+    
+    @a.choices = []
+    @a.save!
+    
+    assert_equal @a.choices, []
   end
 end

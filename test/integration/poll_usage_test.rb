@@ -22,11 +22,11 @@ class PollUsageTest < ActionController::IntegrationTest
   def setup
     ApplicationConfig.state = :open
 
-    @q1 = Question.create( :text => 'q1', :sort_id => 1, :kind => 'singlechoice')
+    @q1 = Question.create( :text => 'q1', :sort_id => 1, :num_choices => 1)
     @q1.alternatives << Alternative.new( :text => 'q1 a1' )
     @q1.alternatives << Alternative.new( :text => 'q1 a2' )
     
-    @q2 = Question.create( :text => 'q2', :sort_id => 2, :kind => 'singlechoice')
+    @q2 = Question.create( :text => 'q2', :sort_id => 2, :num_choices => 1)
     @q2.alternatives << Alternative.new( :text => 'q2 a1' )
     @q2.alternatives << Alternative.new( :text => 'q2 a2' )        
 
@@ -85,19 +85,18 @@ class PollUsageTest < ActionController::IntegrationTest
     assert page.has_content?('q1 a1')
     assert page.has_content?('q1 a2')
     assert !page.has_content?('q2')
-    check('selected_alternatives[1]')
+    check('q1 a1')
     click_on('Confermo')
     
     assert page.has_content?('q2')
     assert page.has_content?('q2 a1')
     assert page.has_content?('q2 a2')
     assert !page.has_content?('q1')  
-    Capybara.save_and_open_page
-    check('selected_alternatives[4]')
+    check('q2 a2')
     click_on('Confermo')
     
-    assert @q1.filled_answers[0].alternative == Alternative.find_by_text('q1 a1')
-    assert @q2.filled_answers[0].alternative == Alternative.find_by_text('q2 a2')
+    assert_equal @q1.filled_answers[0].choices, [Alternative.find_by_text('q1 a1').id]
+    assert_equal @q2.filled_answers[0].choices, [Alternative.find_by_text('q2 a2').id]
 
     
     assert page.has_content?('Sondaggio completato')    
@@ -160,7 +159,7 @@ class PollUsageTest < ActionController::IntegrationTest
     select_alternatives([1,0])
     select_alternatives([0,1])
     select_alternatives([1,0])
-    
+
     assert_equal 2,Answer.stats[@q1.id][@q1.alternatives[0].id]
     assert_equal 2,Answer.stats[@q1.id][@q1.alternatives[1].id]
     assert_equal 3,Answer.stats[@q2.id][@q2.alternatives[0].id]

@@ -54,7 +54,7 @@ class ActivationCode < ActiveRecord::Base
   end
   
   def poll_completed?
-    answers.all? { |a| !a.alternative_id.blank? }
+    answers.all? { |a| !a.choices.blank? }
   end
   
   def next_answer

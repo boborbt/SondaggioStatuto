@@ -14,30 +14,44 @@
 # along with SondaggioStatuto.  If not, see <http://www.gnu.org/licenses/>.
 
 class Answer < ActiveRecord::Base
-  belongs_to :alternative
   belongs_to :question
   belongs_to :activation_code
   
-  named_scope :filled_answers, :conditions => 'alternative_id is not NULL'
-  named_scope :assignable_answers, :conditions => 'activation_code_id is NULL AND alternative_id is NULL'
+  named_scope :filled_answers, :conditions => 'choices is not NULL'
+  named_scope :assignable_answers, :conditions => 'activation_code_id is NULL AND choices is NULL'
   
-  def assign_alternatives!(alternative_ids)
-    # FIXME: Support more than one alternative!
-    puts "Warn! Look at the FIXME"
-    alternative_id = alternative_ids[0]
-    
+  def validate
+    unless choices.nil? || choices.size <= question.num_choices
+      errors.add_to_base("Il numero di scelte (attualmente #{choices.size}) deve essere minore o uguale a #{question.num_choices}")
+    end
+  end
+  
+  def choices
+    self['choices'] && self['choices'].split(',').map { |c| c.to_i } || nil
+  end
+  
+  def choices= values
+    self['choices'] = (values.nil? ? nil : values.join(','))
+  end
+  
+  def assign_choices(alternative_ids)    
+    result = nil
     Answer.transaction do
       self.activation_code = nil
-      self.alternative_id = alternative_id
-      self.save!    
+      self.choices = alternative_ids
+      result = self.save
+      raise ActiveRecord::Rollback unless result
     end
+    
+    result
   end
   
   def Answer.stats
     alt_stats = {}
-    Alternative.all.each do |a|
-      alt_stats[a.question_id] ||= {}
-      alt_stats[a.question_id][a.id] = Answer.count(:conditions => {:alternative_id => a.id})
+    valid_answers = Answer.all(:conditions => 'choices IS NOT NULL')
+    Alternative.all.each do |alt|
+      alt_stats[alt.question_id] ||= {}      
+      alt_stats[alt.question_id][alt.id] = valid_answers.find_all { |answer| answer.choices.include?(alt.id) }.count
     end
     
     alt_stats

@@ -18,9 +18,9 @@ class Question < ActiveRecord::Base
   has_many :answers
 
   validates_presence_of :sort_id
-  validates_inclusion_of :kind, :in => %w{ multichoice singlechoice }
+  validates_presence_of :num_choices
   
   def filled_answers
-    answers.find(:all, :conditions => 'alternative_id IS NOT NULL')
+    answers.find(:all, :conditions => 'choices IS NOT NULL')
   end
 end

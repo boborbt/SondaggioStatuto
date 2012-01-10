@@ -25,7 +25,7 @@ q1alt2 = %q{Dani}
 q1alt3 = %q{Leo}
 q1alt4 = %q{Gigi}
 
-q1 = Question.create!( :text => q1text, :sort_id => 1, :kind => 'multichoice' )
+q1 = Question.create!( :text => q1text, :sort_id => 1, :num_choices => 2 )
 q1.alternatives << Alternative.create!( :text => q1alt1 )
 q1.alternatives << Alternative.create!( :text => q1alt2 )
 q1.alternatives << Alternative.create!( :text => q1alt3 )
