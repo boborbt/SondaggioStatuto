@@ -14,15 +14,12 @@
 # along with SondaggioStatuto.  If not, see <http://www.gnu.org/licenses/>.
 
 class UserCheck < ActionMailer::Base
-  
-
   def activation_code(user, sent_at = Time.now)
-    subject    %q{Credenziali di accesso al sondaggio sullo Statuto dell'Università di Torino}
+    subject    %q{Credenziali di accesso alla piattaforma per i sondaggi gestita dalla Rete 29 Aprile}
     recipients user.email
     from       'sondaggio.statuto@gmail.com'
     sent_on    sent_at
     
     body      :activation_code => user.activation_code.code
   end
-
 end
