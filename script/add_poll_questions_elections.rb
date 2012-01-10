@@ -13,15 +13,41 @@
 # You should have received a copy of the GNU General Public License
 # along with SondaggioStatuto.  If not, see <http://www.gnu.org/licenses/>.
 
-stats = Answer.stats
-# puts "Numero votanti: #{stats[1][1]+stats[1][2]}"
-puts stats.inspect
 
-# puts %Q{
-#   Quesito 1:
-#   alternativa 1: #{stats[1][1]}
-#   alternativa 2: #{stats[1][2]}
-#   Quesito 2:
-#   alternativa 1: #{stats[2][3]}
-#   alternativa 2: #{stats[2][4]}
-# }
+q1text = %q{
+  <div class="tit_quesito">
+  Selezionare il candidato prescelto:
+  </div> 
+}
+
+q1alt1 = %q{
+  <div class="alternativa">
+  <p>A)  &ndash; Bobo</p>
+  </div>
+}
+
+q1alt2 = %q{
+  <div class="alternativa">
+  <p>B)  &ndash; Bobo</p>
+  </div>  
+}
+
+q1alt3 = %q{
+  <div class="alternativa">
+  <p>C)  &ndash; Leo</p>
+  </div>
+}
+
+q1alt4 = %q{
+  <div class="alternativa">
+  <p>D)  &ndash; Gigi</p>
+  </div>  
+}
+
+q1 = Question.create!( :text => q1text, :sort_id => 1 )
+q1.alternatives << Alternative.create!( :text => q1alt1 )
+q1.alternatives << Alternative.create!( :text => q1alt2 )
+q1.alternatives << Alternative.create!( :text => q1alt3 )
+q1.alternatives << Alternative.create!( :text => q1alt4 )
+
+

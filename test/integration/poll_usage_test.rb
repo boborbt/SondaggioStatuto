@@ -55,7 +55,6 @@ class PollUsageTest < ActionController::IntegrationTest
   test "WhiteList based email checking" do
     old_config = APP_CONFIG['email_validation']
     APP_CONFIG['email_validation'] = 'white_list'
-    
     AllowedEmail.create(:email => 'bobo@bobo.com')
     
     visit( root_path )

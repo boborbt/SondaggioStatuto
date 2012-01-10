@@ -77,16 +77,9 @@ input[type="submit"] {
 	font: italic normal normal 1em Arial, sans-serif;
 }
 
-.alternativa_a{
+.alternativa {
 	background-color: #DDDBD1;
 	padding: 10px 10px;
-/*	border: 1px solid #2873A0;*/
-}
-.alternativa_b{
-	background-color: #DDD7DA;	
-	padding: 10px 10px;
-/*	border: 1px solid #9F374C;*/
-	border-top: 1px solid #9F374C;
 }
 
 div.fieldWithErrors {
