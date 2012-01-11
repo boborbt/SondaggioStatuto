@@ -16,14 +16,14 @@
 questions = []
 
 questions << {
-  :text => %q{Selezionare i candidati prescelti per la Commissione Regolamenti Organi Centrali:},
+  :text => %q{<h1>Commissione Regolamenti Organi Centrali</h1><p>Da questa consultazione emergeranno i nominativi di due ricercatori che prenderanno parte ai lavori della Commissione Modifiche Statuto in merito alla stesura dei regolamenti per gli organi centrali.</p>},
   :alts => [  %q{Guido Bonino}, 
               %q{Anna Miglietta}, 
               %q{Silvia Pasqua} ]
 }
 
 questions << {
-  :text => %q{Selezionare i candidati prescelti per la Commissione Organi Decentrati:},
+  :text => %q{<h1>Commissione Organi Decentrati</h1><p>Da questa consultazione emergeranno i nominativi di due ricercatori che prenderanno parte ai lavori della Commissione Modifiche Statuto in merito alla stesura dei regolamenti per gli organi decentrati.</p>},
   :alts => [  %q{Alessandro Barge},
               %q{Silvia Gattino},
               %q{Giuseppe Noto},
@@ -31,7 +31,7 @@ questions << {
 }
 
 questions << {
-  :text => %q{Selezionare i candidati prescelti per la Commissione Regolamenti Elettorali:},
+  :text => %q{<h1>Commissione Regolamenti Elettorali</h1><p>Da questa consultazione emergeranno i nominativi di due ricercatori che prenderanno parte ai lavori della Commissione Modifiche Statuto in merito alla stesura dei regolamenti elettorali.</p>},
   :alts => [  %q{Angelo Besana},
               %q{Lia Pacelli},
               %q{Marco Scavino} ]
