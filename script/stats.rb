@@ -15,7 +15,14 @@
 
 stats = Answer.stats
 # puts "Numero votanti: #{stats[1][1]+stats[1][2]}"
-puts stats.inspect
+
+
+stats.each do |q_id,alts|
+  puts Question.find(q_id).text
+  alts.each do |a_id, value|
+    puts "#{Alternative.find(a_id).text}: #{value}"
+  end
+end
 
 # puts %Q{
 #   Quesito 1:
