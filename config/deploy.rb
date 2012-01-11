@@ -16,7 +16,7 @@
 
 default_run_options[:pty] = true  # Must be set for the password prompt from git to work
 set :application, "SondaggioStatuto"
-set :repository,  "ssh://mluser@kdd.di.unito.it/usr/local/GIT/SondaggioStatuto"
+set :repository,  "git://github.com/boborbt/SondaggioStatuto.git"
 set :branch, "master"
 set :deploy_via, :remote_cache
 
