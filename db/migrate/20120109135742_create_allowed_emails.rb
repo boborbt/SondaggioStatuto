@@ -1,7 +1,7 @@
 class CreateAllowedEmails < ActiveRecord::Migration
   def self.up
     create_table :allowed_emails do |t|
-      t.text :email
+      t.string :email
     end
     
     add_index :allowed_emails, :email
