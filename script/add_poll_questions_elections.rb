@@ -13,18 +13,34 @@
 # You should have received a copy of the GNU General Public License
 # along with SondaggioStatuto.  If not, see <http://www.gnu.org/licenses/>.
 
+questions = []
 
-q1text = %q{Selezionare il candidato prescelto:}
+questions << {
+  :text => %q{Selezionare i candidati prescelti per la Commissione Regolamenti Organi Centrali:},
+  :alts => [  %q{Guido Bonino}, 
+              %q{Anna Miglietta}, 
+              %q{Silvia Pasqua} ]
+}
 
-q1alt1 = %q{Bobo}
-q1alt2 = %q{Dani}
-q1alt3 = %q{Leo}
-q1alt4 = %q{Gigi}
+questions << {
+  :text => %q{Selezionare i candidati prescelti per la Commissione Organi Decentrati:},
+  :alts => [  %q{Alessandro Barge},
+              %q{Silvia Gattino},
+              %q{Giuseppe Noto},
+              %q{Giovanni Semi} ]
+}
 
-q1 = Question.create!( :text => q1text, :sort_id => 1, :num_choices => 2 )
-q1.alternatives << Alternative.create!( :text => q1alt1 )
-q1.alternatives << Alternative.create!( :text => q1alt2 )
-q1.alternatives << Alternative.create!( :text => q1alt3 )
-q1.alternatives << Alternative.create!( :text => q1alt4 )
+questions << {
+  :text => %q{Selezionare i candidati prescelti per la Commissione Regolamenti Elettorali:},
+  :alts => [  %q{Angelo Besana},
+              %q{Lia Pacelli},
+              %q{Marco Scavino} ]
+}
 
+questions.each_with_index do |q_info, i|
+  q = Question.create!( :text => q_info[:text], :sort_id => i+1, :num_choices => 2 )
+  q_info[:alts].each do |alternative|
+    q.alternatives << Alternative.create!(:text => alternative)
+  end
+end
 

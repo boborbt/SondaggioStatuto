@@ -21,6 +21,14 @@ class ApplicationConfig
 	 :down				# site is down (only displays a closed-site page)
 	]
   end
+  
+  def ApplicationConfig.poll_title
+    APP_CONFIG['poll_title']
+  end
+
+  def ApplicationConfig.poll_description
+    APP_CONFIG['poll_description']
+  end
 
   def ApplicationConfig.check!        
     raise "Invalid application state:#{current}" unless valid_states.include?(@current)

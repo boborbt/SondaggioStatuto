@@ -1,8 +1,6 @@
-<h1>Sondaggio sullo Statuto dell&#x27;Universit&agrave; di Torino</h1>
+<h1><%= ApplicationConfig.poll_title %></h1>
 
-<p class="emph"> Il sondaggio &egrave; rivolto a tutti coloro che lavorano e
-studiano presso l&#x27;Universit&agrave; di Torino. Per partecipare &egrave;
-necessario seguire le seguenti istruzioni: </p>
+<p class="emph"> <%= ApplicationConfig.poll_description %> </p>
 
 <%= render :partial => 'application/instructions', :locals => {:active_point => 1} %>
 
