@@ -3,6 +3,7 @@ source "http://rubygems.org"
 
 # gem 'rack'
 gem "rails", "~> 2.3.5"
+gem 'i18n', "~> 0.4.0"
 gem 'tlsmail'
 gem "sqlite3-ruby", :require => "sqlite3"
 
