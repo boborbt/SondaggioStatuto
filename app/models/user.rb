@@ -18,17 +18,31 @@ require 'sha1'
 class User < ActiveRecord::Base
   has_one :activation_code
     
-  validates_uniqueness_of :email  
+  validates_uniqueness_of :email
+  validates_format_of :email, :with => /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/
   
   def validate
-    unless ApplicationConfig.valid_email?(self.email)    
+    return if ApplicationConfig.allow_unvalidated_users?
+    
+    if !valid_email?
       errors.add_to_base("L'email address #{self.email} non è ritenuto valido per questo sondaggio")
     end
+  end
+  
+  def valid_email?
+    !!ApplicationConfig.valid_email?(self.email)
   end
   
   def assign_activation_code!
     self.activation_code = ActivationCode.consume_one!
     self.save!
+    
+    Answer.transaction do
+      self.activation_code.answers.each do |answer|
+        answer.validated_user = valid_email?
+        answer.save!
+      end
+    end
   end
   
   def has_voted?

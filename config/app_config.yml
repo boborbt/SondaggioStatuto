@@ -16,5 +16,6 @@ development:
   no_mail_sending: true
   secret: secret_string
   email_validation: DomainValidator.new
+  allow_unvalidated_users: true
   poll_title: "Elezioni dei rappresentanti dei ricercatori"
   poll_description: "La consultazione &egrave; rivolta a tutti i ricercatori che lavorano presso l&#x27;Universit&agrave; di Torino. Ha lo scopo di selezionare i candidati per le commissioni per la modifica dello statuto."

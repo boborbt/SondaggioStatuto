@@ -27,7 +27,7 @@ Rails::Initializer.run do |config|
   # -- all .rb files in that directory are automatically loaded.
 
   # Add additional load paths for your own custom dirs
-  config.load_paths += %W( #{RAILS_ROOT}/app/models/email_validators )
+  config.load_paths += %W( #{RAILS_ROOT}/lib/email_validators )
 
   # Specify gems that this application depends on and have them installed with rake gems:install
 

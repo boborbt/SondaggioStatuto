@@ -12,7 +12,7 @@
 # 
 # You should have received a copy of the GNU General Public License
 # along with SondaggioStatuto.  If not, see <http://www.gnu.org/licenses/>.
-
+ 
 class ApplicationConfig
   def ApplicationConfig.valid_states
  	[
@@ -43,7 +43,7 @@ class ApplicationConfig
   
   def ApplicationConfig.valid_email?(email)
     validation = ApplicationConfig.email_validation
-    return validation.validate_mail(email)
+    return validation.validate_email(email)
   end
 
   def ApplicationConfig.state
@@ -64,6 +64,10 @@ class ApplicationConfig
     check!
 
     @current
+  end
+  
+  def ApplicationConfig.allow_unvalidated_users?
+    APP_CONFIG['allow_unvalidated_users'] == true
   end
 
   def ApplicationConfig.no_mail_sending?

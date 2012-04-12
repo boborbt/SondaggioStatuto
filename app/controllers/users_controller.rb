@@ -25,7 +25,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(params[:user])
     
-    if @user.save    
+    if @user.save
       @user.assign_activation_code!
     
       @activation_code = @user.activation_code    
