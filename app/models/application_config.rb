@@ -34,12 +34,16 @@ class ApplicationConfig
     raise "Invalid application state:#{current}" unless valid_states.include?(@current)
   end
   
-  def ApplicationConfig.valid_email?(email)
-    validation = APP_CONFIG['email_validation']
-    return validation.match(email) if validation.class == Regexp
-    return AllowedEmail.find_by_email(email) if validation == 'white_list'
+  def ApplicationConfig.email_validation
+    validation_obj = APP_CONFIG['email_validation']
+    return validation_obj unless validation_obj.class == String
     
-    raise "Unknown email validation method"
+    APP_CONFIG['email_validation'] = eval( validation_obj )
+  end
+  
+  def ApplicationConfig.valid_email?(email)
+    validation = ApplicationConfig.email_validation
+    return validation.validate_mail(email)
   end
 
   def ApplicationConfig.state

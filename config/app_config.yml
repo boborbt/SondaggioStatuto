@@ -1,7 +1,7 @@
 production:
   app_state: closed
   secret: put_here_your_secret_string
-  email_validation: white_list
+  email_validation: RegexpValidator.new(/[.@]unito\.it$/)
   poll_title: "Elezioni dei rappresentanti dei ricercatori"
   poll_description: "La consultazione &egrave; rivolta a tutti i ricercatori che lavorano presso l&#x27;Universit&agrave; di Torino. Ha lo scopo di selezionare i candidati per le commissioni per la modifica dello statuto."
 
@@ -9,12 +9,12 @@ test:
   app_state: open
   no_mail_sending: true
   secret: secret_string
-  email_validation: !ruby/regexp /[.@]unito\.it$/
+  email_validation: RegexpValidator.new(/[.@]unito\.it$/)
 
 development:
   app_state: open
   no_mail_sending: true
   secret: secret_string
-  email_validation: white_list
+  email_validation: DomainValidator.new
   poll_title: "Elezioni dei rappresentanti dei ricercatori"
   poll_description: "La consultazione &egrave; rivolta a tutti i ricercatori che lavorano presso l&#x27;Universit&agrave; di Torino. Ha lo scopo di selezionare i candidati per le commissioni per la modifica dello statuto."
